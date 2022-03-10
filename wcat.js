@@ -33,14 +33,12 @@ for(let i = 0; i < filesArr.length; i++){
     let fileContent = fs.readFileSync(filesArr[i]);
     content += fileContent + "\n";
 }
-console.log(content);
+// console.log(content);
 
 let contentArr = content.split("\n");
-console.table(contentArr);
+// console.table(contentArr);
 
 let is_S_present = optionsArr.includes("-s");
-let is_N_present = optionsArr.includes("-n");
-let is_B_present = optionsArr.includes("-b");
 if(is_S_present){
     for(let i = 1; i < contentArr.length; i++){
         if(contentArr[i] == "" && (contentArr[i - 1] == "" || contentArr[i - 1] == null)){
@@ -54,7 +52,52 @@ if(is_S_present){
             tempArr.push(contentArr[i]);
         }
     }
-    console.log(tempArr);
+    // console.log(tempArr);
+    contentArr = tempArr;
 }
 // if(contentArr[i] == "" && (contentArr[i - 1] == "" || content[i - 1] == null))
 // console.table(contentArr);
+
+let indexOfN = optionsArr.indexOf("-n");
+let indexOfB = optionsArr.indexOf("-b");
+let finalOption = "";
+if(indexOfN != -1 && indexOfB != -1){
+    if(indexOfN < indexOfB){
+        finalOption = "-n";
+    }else{
+        finalOption = "=b";    
+    }
+}else{
+    if(indexOfN != -1){
+        finalOption = "-n";
+    }else if(indexOfB != -1){
+        finalOption = "-b"
+    }
+}
+
+if(finalOption == "-n"){
+    modifyContentByN();
+}else if(finalOption == "-b"){
+    modifyContentByB();
+}
+
+function modifyContentByN(){
+    for(let i = 0; i < contentArr.length; i++){
+        contentArr[i] = (i + 1) + ")" + contentArr[i];
+    }
+}
+
+function modifyContentByB(){
+    let count = 1;
+    for(let i = 0; i < contentArr.length; i++){
+        if(contentArr[i] != ""){
+            contentArr[i] = (count++) + ")" + contentArr[i];
+        }
+        
+    }
+}
+for(let i = 0; i < contentArr.length; i++){
+    if(contentArr[i] != "")
+    console.log(contentArr[i]);
+}
+// console.log(contentArr);
