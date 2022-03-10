@@ -13,7 +13,7 @@ for(let i = 0; i < inputArr.length; i++)
     }else{
         filesArr.push(inputArr[i]);
     }
-    
+
 }
 
 // check if files are present
@@ -22,7 +22,8 @@ for(let i = 0 ; i < filesArr.length; i++){
     let doesFileExist = fs.existsSync(filesArr[i]);
     if(!doesFileExist){
         console.log("Files does not exist");
-        return;
+        // return;
+        process.exit();
     }
 }
 
